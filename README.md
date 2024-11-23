@@ -18,10 +18,17 @@ To consider the project were:
 * All the scripts are updated one time in a day from this GitHub repository
 
 ### CSV
+The files are comma delimited and primary are:
+* jobs.csv
+* deparments.csv
+* hired_employees.csv
 
 ### S3
+The AWS S3 Bucket are created to utilize the minimium of capacity, with any load to the DB the API deleted the file in the bucket.
 
 ### EC2
+The AWS EC2 services is configured to host a virtual server of a Linux Ubuntu system.  
+It's configured to maintain the free tier cost in AWS plataform.
 
 ### Python Scripts
 #### Trigger
