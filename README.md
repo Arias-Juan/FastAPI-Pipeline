@@ -15,7 +15,7 @@ To consider the project were:
 * The api script were tested by Postman
 * The project can be deployed by Docker with the Dockerfile in the repository
 * The DB is public and can be access in any database management tool (eg. Dbeaver)
-* All the scripts are updated one time in a day from this GitHub repository
+* All the scripts are updated with the first time from this GitHub repository
 
 ### CSV
 The files are comma delimited and primary are:
@@ -37,5 +37,6 @@ It's configured to maintain the free tier cost in AWS plataform.
 ### PostgreSQL
 
 ### Docker
+
 
 ## Backlog improvement
