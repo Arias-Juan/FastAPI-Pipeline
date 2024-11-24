@@ -5,6 +5,6 @@ app = FastAPI()
 
 app.include_router(load_api)
 
-@app.get('/test')
+@app.get('/')
 async def root():
-    return {"Test": "Globant DE Challenge"}
+    return {"Globant": "DE Challenge"}
