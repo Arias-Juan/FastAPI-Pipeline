@@ -4,9 +4,9 @@ RUN apt-get update && apt-get install \
 	-y postgresql postgresql-contrib && apt-get clean
 
 RUN service postgresql start && \
-    sudo -u postgres psql -c "CREATE USER user_admin WITH PASSWORD '';" && \
-    sudo -u postgres psql -c "CREATE DATABASE challenge_db;" && \
-    sudo -u postgres psql -c "GRANT ALL PRIVILEGES ON DATABASE challenge_db TO user_admin;"
+    psql -c "CREATE USER user_admin WITH PASSWORD 'admin2411';" && \
+    psql -c "CREATE DATABASE challenge_db;" && \
+    psql -c "GRANT ALL PRIVILEGES ON DATABASE challenge_db TO user_admin;"
 
 WORKDIR /
 
