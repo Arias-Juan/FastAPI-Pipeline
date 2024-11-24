@@ -19,4 +19,4 @@ COPY . .
 EXPOSE 8000
 EXPOSE 5432
 
-CMD service postgresql start && uvicorn api.main:app --host 0.0.0.0 --port 8000
+CMD service postgresql start && uvicorn api.main:app --host 0.0.0.0 --port 8000 && python trigger.py
