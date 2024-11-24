@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from load_psql import load_api
+from api.load_psql import load_api
 
 app = FastAPI()
 
