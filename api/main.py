@@ -1,12 +1,13 @@
 from fastapi import FastAPI
-from api.load_psql import load_api
-from api.extract_s3 import extract_s3_api
+from api.etl_s3_psql import etl_s3_psql
 
 app = FastAPI()
 
-app.include_router(load_api)
-app.include_router(extract_s3_api)
+app.include_router(etl_s3_psql)
 
 @app.get('/')
 async def root():
+    """
+    To test the correct connection to the API.
+    """
     return {"Globant": "DE Challenge"}
