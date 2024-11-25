@@ -26,7 +26,8 @@ os.makedirs(os.path.dirname(log_file), exist_ok=True)
 def check_new_files():
    response = s3_client.list_objects_v2(Bucket=bucket_name)
    if 'Contents' in response:
-        file = max(response['Contents'], key=lambda x: x['LastModified'])
+        file_max = max(response['Contents'], key=lambda x: x['LastModified'])
+        file = file_max['Key']
         timestamp = datetime.now()
         watch_log = f'[WATCH] {timestamp}: File found "{file}"'
         with open(log_file, 'a') as file:
@@ -41,7 +42,7 @@ def check_new_files():
 
 def call_api(file):
     timestamp = datetime.now()
-    file_api = file.replace('.csv', '')
+    file_api = os.path.splitext(file)[0]
     try:
         # Can apply post with dictionary in future
         response = requests.post(f'{api}/extract',json={"table": file_api})
