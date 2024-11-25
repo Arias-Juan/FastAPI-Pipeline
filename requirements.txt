@@ -5,3 +5,4 @@ python-dotenv==1.0.1
 pyspark==3.5.3
 Cython==3.0.11
 gevent==24.11.1
+pandas==2.2.3

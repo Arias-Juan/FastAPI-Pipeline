@@ -1,9 +1,9 @@
 from fastapi import APIRouter
 from dotenv import load_dotenv
 import boto3
-from tables_dictionary import schemas
+from api.tables_dictionary import schemas
 from pyspark.sql import SparkSession
-from pyspark.sql.types import StructType, StructField, StringType
+from pyspark.sql.types import *
 from pyspark.sql.functions import col,lit
 import pandas as pd
 from io import StringIO
