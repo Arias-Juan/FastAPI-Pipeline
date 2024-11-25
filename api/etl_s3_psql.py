@@ -22,7 +22,7 @@ s3_client = boto3.client(
     region_name='sa-east-1'
 )
 
-url = "jdbc:postgresql://0.0.0.0:5432/challenge_db"
+url = os.getenv("DB_URL")
 properties = {
     "user": os.getenv('user_psql'),
     "password": os.getenv('password_psql'),
@@ -36,7 +36,7 @@ etl_s3_psql = APIRouter()
 @etl_s3_psql.post('/extract')
 async def root(request: Request):
     api_post = request.json()
-    table = api_post.get("table")
+    table = api_post["table"]
     response = s3_client.get_object(Bucket=bucket_name, Key=f'{table}.csv')
     csv_raw = response['Body'].read().decode('utf-8')
     pandas_df = pd.read_csv(StringIO(csv_raw))

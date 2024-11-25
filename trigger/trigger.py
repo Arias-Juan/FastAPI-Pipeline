@@ -16,7 +16,7 @@ s3_client = boto3.client(
     region_name='sa-east-1'
 )
 
-api = "http://0.0.0.0:8080"
+api = os.getenv('API_URL')
 
 bucket_name = "glob-de-challenge"
 
