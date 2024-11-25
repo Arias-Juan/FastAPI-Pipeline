@@ -4,6 +4,7 @@ import requests
 import os
 import time
 from dotenv import load_dotenv
+import logging
 
 load_dotenv()
 aws_access_key_id = os.getenv('aws_access_key_id')
@@ -20,24 +21,23 @@ api = os.getenv('API_URL')
 
 bucket_name = "glob-de-challenge"
 
-log_file = "./log/watcher.log"
-os.makedirs(os.path.dirname(log_file), exist_ok=True)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 
 def check_new_files():
    response = s3_client.list_objects_v2(Bucket=bucket_name)
+   logging.debug("Running check_new_files")
    if 'Contents' in response:
         file_max = max(response['Contents'], key=lambda x: x['LastModified'])
         file = file_max['Key']
         timestamp = datetime.now()
-        watch_log = f'[WATCH] {timestamp}: File found "{file}"'
-        with open(log_file, 'a') as log:
-            log.write(watch_log + "\n")
+        logging.info(f'File found: {file}.')
         return file
    else:
         timestamp = datetime.now()
-        watch_log = f'[WATCH] {timestamp}: No file load in the bucket'
-        with open(log_file, 'a') as log:
-            log.write(watch_log + "\n")
+        logging.warning("File dont found.")
         return []
 
 def call_api(file):
@@ -47,18 +47,12 @@ def call_api(file):
         # Can apply post with dictionary in future
         response = requests.post(f'{api}/extract',json={"table": file_api})
         if response.status_code == 200:
-            watch_log = f'[SUCCESS] {timestamp}: {file} load via API.'
-            with open(log_file, 'a') as log:
-                log.write(watch_log + "\n")
+            logging.debug("Success call to the API")
         else:
-            watch_log = f'[ERROR] {timestamp}: {file} dont load.'
-            with open(log_file, 'a') as log:
-                log.write(watch_log + "\n")
+            logging.error("Problem loading the file to the API")
             file_error = True
     except Exception as e:
-        watch_log = f'[ERROR] {timestamp}: API ERROR ({e}).'
-        with open(log_file, 'a') as log:
-            log.write(watch_log + "\n")
+        logging.critical(f'Problem with connection to the API: {e}')
 
 def monitor_s3_for_files():
     while True:
@@ -70,11 +64,10 @@ def monitor_s3_for_files():
             if file_error:
                 file_error = False
                 # Here can be added a function to notify what file has error to action.
+                logging.critical("There is a problem in the file, please checkout.")
             else:
                 s3_client.delete_object(Bucket=bucket_name, Key=file)
-                watch_log = f'[DELETE] {timestamp}: Deleted {file} in bucket.'
-                with open(log_file, 'a') as log:
-                    log.write(watch_log + "\n")
+                logging.debug("File deleted successfully.")
         
         time.sleep(60)
 
