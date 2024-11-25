@@ -21,7 +21,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - /app_data:/app
+      - ./api:/app/api
     command: ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]
 
   trigger:
@@ -30,7 +30,7 @@ services:
       dockerfile: Dockerfile
     container_name: trigger
     volumes:
-      - /app_data:/app
+      - ./api:/app/api
     command: ["python", "trigger/trigger.py"]
 
 volumes:
