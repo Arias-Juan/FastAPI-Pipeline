@@ -30,14 +30,14 @@ def check_new_files():
         file = file_max['Key']
         timestamp = datetime.now()
         watch_log = f'[WATCH] {timestamp}: File found "{file}"'
-        with open(log_file, 'a') as file:
-            file.write(watch_log + "\n")
+        with open(log_file, 'a') as log:
+            log.write(watch_log + "\n")
         return file
    else:
         timestamp = datetime.now()
         watch_log = f'[WATCH] {timestamp}: No file load in the bucket'
-        with open(log_file, 'a') as file:
-            file.write(watch_log + "\n")
+        with open(log_file, 'a') as log:
+            log.write(watch_log + "\n")
         return []
 
 def call_api(file):
@@ -48,17 +48,17 @@ def call_api(file):
         response = requests.post(f'{api}/extract',json={"table": file_api})
         if response.status_code == 200:
             watch_log = f'[SUCCESS] {timestamp}: {file} load via API.'
-            with open(log_file, 'a') as file:
-                file.write(watch_log + "\n")
+            with open(log_file, 'a') as log:
+                log.write(watch_log + "\n")
         else:
             watch_log = f'[ERROR] {timestamp}: {file} dont load.'
-            with open(log_file, 'a') as file:
-                file.write(watch_log + "\n")
+            with open(log_file, 'a') as log:
+                log.write(watch_log + "\n")
             file_error = True
     except Exception as e:
         watch_log = f'[ERROR] {timestamp}: API ERROR ({e}).'
-        with open(log_file, 'a') as file:
-            file.write(watch_log + "\n")
+        with open(log_file, 'a') as log:
+            log.write(watch_log + "\n")
 
 def monitor_s3_for_files():
     while True:
@@ -73,8 +73,8 @@ def monitor_s3_for_files():
             else:
                 s3_client.delete_object(Bucket=bucket_name, Key=file)
                 watch_log = f'[DELETE] {timestamp}: Deleted {file} in bucket.'
-                with open(log_file, 'a') as file:
-                    file.write(watch_log + "\n")
+                with open(log_file, 'a') as log:
+                    log.write(watch_log + "\n")
         
         time.sleep(60)
 
