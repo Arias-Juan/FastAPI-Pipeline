@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Request
 from dotenv import load_dotenv
 import boto3
 from api.tables_dictionary import schemas
@@ -7,6 +7,7 @@ from pyspark.sql.types import *
 from pyspark.sql.functions import col,lit
 import pandas as pd
 from io import StringIO
+import os
 
 spark = SparkSession.builder.appName("etl_s3_psql").config("spark.jars", './jar/postgresql-42.7.1.jar').getOrCreate()
 
@@ -32,8 +33,10 @@ bucket_name = 'glob-de-challenge'
 
 etl_s3_psql = APIRouter()
 
-@etl_s3_psql.get(f'/{table}')
-async def root():
+@etl_s3_psql.post('/extract')
+async def root(request: Request):
+    api_post = request.json()
+    table = api_post.get("table")
     response = s3_client.get_object(Bucket=bucket_name, Key=f'{table}.csv')
     csv_raw = response['Body'].read().decode('utf-8')
     pandas_df = pd.read_csv(StringIO(csv_raw))

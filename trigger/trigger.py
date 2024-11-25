@@ -44,7 +44,7 @@ def call_api(file):
     file_api = file.replace('.csv', '')
     try:
         # Can apply post with dictionary in future
-        response = requests.get(f'{api}/{file_api}')
+        response = requests.post(f'{api}/extract',json={"table": file_api})
         if response.status_code == 200:
             watch_log = f'[SUCCESS] {timestamp}: {file} load via API.'
             with open(log_file, 'a') as file:

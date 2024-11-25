@@ -1,14 +1,13 @@
 FROM python:3.12
 
 RUN apt-get update && apt-get install \
-	-y postgresql postgresql-contrib && apt-get clean
+        -y postgresql postgresql-contrib && apt-get clean
 
-RUN apt-get update && apt-get install \
-	-y default-jdk
+RUN apt-get update && apt-get install -y default-jdk && apt-get clean
 
 WORKDIR /
 
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
+RUN export JAVA_HOME="$(dirname $(dirname $(readlink -f $(which java))))"
 
 COPY requirements.txt .
 
