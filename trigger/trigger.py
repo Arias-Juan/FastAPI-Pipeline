@@ -56,6 +56,7 @@ def call_api(file):
 
 def monitor_s3_for_files():
     while True:
+        file_error = False
         file = check_new_files()
 
         if file:
