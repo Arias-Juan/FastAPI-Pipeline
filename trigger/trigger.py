@@ -48,6 +48,7 @@ def call_api(file):
         response = requests.post(f'{api}/extract',json={"table": file_api})
         if response.status_code == 200:
             logging.debug("Success call to the API")
+            file_error = False
         else:
             logging.error("Problem loading the file to the API")
             file_error = True
