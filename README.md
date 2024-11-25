@@ -31,12 +31,17 @@ The AWS EC2 services is configured to host a virtual server of a Linux Ubuntu sy
 It's configured to maintain the free tier cost in AWS plataform.
 
 ### Python Scripts
-#### Trigger
-#### API
+There are two python scripts: Trigger and Main API.
+Trigger is the script that watch the s3 bucket and when a file is loaded, do a call to the api to upload the file in postgres and then deleted the file.
+Main API is the api that recive the call and make the action working with pyspark, pandas, request, amoung others libraries.
 
 ### PostgreSQL
+The PostgreSQL are configured to start a database called challenge_db, later in that database is where the API make the write of the extracted tables from s3.
 
 ### Docker
-
+The project use Docker and Docker-compose to build the containers with three apps: trigger, app and postgre, all in one image.
 
 ## Backlog improvement
+- To future, according to cost, replace EC2 with AWS services like Lambda, Glue, DynamoDB and Cloudwatch.
+- Change the load to transform the csv file to parquet (With Hudi).
+- Friendly tables dictionary modification from a drive file.
