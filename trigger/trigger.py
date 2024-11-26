@@ -32,27 +32,26 @@ def check_new_files():
    if 'Contents' in response:
         file_max = max(response['Contents'], key=lambda x: x['LastModified'])
         file = file_max['Key']
-        timestamp = datetime.now()
         logging.info(f'File found: {file}.')
         return file
    else:
-        timestamp = datetime.now()
         logging.warning("File dont found.")
-        return []
+        return False
 
 def call_api(file):
-    timestamp = datetime.now()
     file_api = os.path.splitext(file)[0]
     try:
         # Can apply post with dictionary in future
         response = requests.post(f'{api}/extract',json={"table": f"{file_api}"})
         if response.status_code == 200:
             logging.debug("Success call to the API")
+            file_error = False
         else:
             logging.error("Problem loading the file to the API")
             file_error = True
     except Exception as e:
         logging.critical(f'Problem with connection to the API: {e}')
+    return file_error
 
 def monitor_s3_for_files():
     while True:
@@ -60,8 +59,7 @@ def monitor_s3_for_files():
         file = check_new_files()
 
         if file:
-            call_api(file)
-            timestamp = datetime.now()
+            file_error = call_api(file)
             if file_error:
                 file_error = False
                 # Here can be added a function to notify what file has error to action.

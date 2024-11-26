@@ -30,8 +30,8 @@ The .env file must have this variables:
 - aws_secret_access_key=<Token you obtain from aws console you needed to access s3>
 - user_psql=<The user to access postgres / must be modified in docker-compose.yml too>
 - password_psql=<The password to access postgres / must be modified in docker-compose.yml too>
-- DB_URL='jdbc:postgresql://<IP of your instance>:5432/challenge_db?currentSchema=public'
-- API_URL='http://<IP of your instance>:8080'
+- DB_URL='jdbc:postgresql://< IP of your instance>:5432/challenge_db?currentSchema=public'
+- API_URL='http://< IP of your instance>:8080'
 
 #### CSV
 The files are comma delimited and primary are:
