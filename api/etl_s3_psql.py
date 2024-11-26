@@ -46,9 +46,9 @@ async def root(request: Request):
         df = spark.createDataFrame(pandas_df)
     try:
         df.write.jdbc(url, table, mode="overwrite", properties=properties)
-        return {200: 'OK'}
+        return {"Table_load": table}
     except Exception as e:
-        return {500: e}
+        return {"Table_error": str(e)}
 
 @etl_s3_psql.get('/t')
 async def root():
