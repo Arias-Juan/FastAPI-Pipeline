@@ -53,7 +53,8 @@ def call_api(file):
             return file_error
     except Exception as e:
         logging.critical(f'Problem with connection to the API: {e}')
-        return
+        file_error = True
+        return file_error
 
 def monitor_s3_for_files():
     while True:
