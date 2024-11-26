@@ -46,12 +46,14 @@ def call_api(file):
         if response.status_code == 200:
             logging.debug("Success call to the API")
             file_error = False
+            return file_error
         else:
             logging.error("Problem loading the file to the API")
             file_error = True
+            return file_error
     except Exception as e:
         logging.critical(f'Problem with connection to the API: {e}')
-    return file_error
+        return
 
 def monitor_s3_for_files():
     while True:
