@@ -35,7 +35,7 @@ etl_s3_psql = APIRouter()
 
 @etl_s3_psql.post('/extract')
 async def root(request: Request):
-    api_post = request.json()
+    api_post = await request.json()
     table = api_post["table"]
     response = s3_client.get_object(Bucket=bucket_name, Key=f'{table}.csv')
     csv_raw = response['Body'].read().decode('utf-8')
@@ -46,9 +46,9 @@ async def root(request: Request):
         df = spark.createDataFrame(pandas_df)
     try:
         df.write.jdbc(url, table, mode="overwrite", properties=properties)
-        return {"Table_load": table}
+        return {200: 'OK'}
     except Exception as e:
-        return {"Table_error": str(e)}
+        return {500: e}
 
 @etl_s3_psql.get('/t')
 async def root():
