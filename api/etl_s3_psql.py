@@ -46,7 +46,7 @@ async def root(request: Request):
         if pandas_df[column].dtype == 'float64':
             pandas_df[column] = pandas_df[column].fillna(0).astype('int64')
     
-    schema_check = schemas.get(table) is not False
+    schema_check = table in schemas
     if schema_check:
         df = spark.createDataFrame(pandas_df, schema=schemas[table])
     else:
