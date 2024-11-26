@@ -45,7 +45,7 @@ def call_api(file):
     file_api = os.path.splitext(file)[0]
     try:
         # Can apply post with dictionary in future
-        response = requests.post(f'{api}/extract',json={"table": file_api})
+        response = requests.post(f'{api}/extract',json={"table": f"{file_api}"})
         if response.status_code == 200:
             logging.debug("Success call to the API")
         else:
