@@ -39,7 +39,7 @@ async def root(request: Request):
     table = api_post["table"]
     response = s3_client.get_object(Bucket=bucket_name, Key=f'{table}.csv')
     csv_raw = response['Body'].read().decode('utf-8')
-    pandas_df = pd.read_csv(StringIO(csv_raw))
+    pandas_df = pd.read_csv(StringIO(csv_raw), header=None)
     if schemas[table]:
         df = spark.createDataFrame(pandas_df, schema=schemas[table])
     else:
