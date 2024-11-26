@@ -38,12 +38,19 @@ async def root(request: Request):
     api_post = await request.json()
     table = api_post["table"]
     response = s3_client.get_object(Bucket=bucket_name, Key=f'{table}.csv')
+
     csv_raw = response['Body'].read().decode('utf-8')
     pandas_df = pd.read_csv(StringIO(csv_raw), sep=",", header=None)
+
+    for column in pandas_df.columns:
+        if pandas_df[column].dtype == 'float64':
+            pandas_df[column] = pandas_df[column].fillna(0).astype('int64')
+
     if schemas[table]:
         df = spark.createDataFrame(pandas_df, schema=schemas[table])
     else:
         df = spark.createDataFrame(pandas_df)
+
     try:
         df.write.jdbc(url, table, mode="overwrite", properties=properties)
         return {"Table_load": table}
