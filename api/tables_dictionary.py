@@ -4,7 +4,7 @@ from pyspark.sql.types import *
     Schema to table jobs.csv file.
 """
 schema_jobs = StructType([
-    StructField("id", IntegerType(), True),
+    StructField("id", IntegerType(), False),
     StructField("job", StringType(), True)
 ])
 
@@ -12,7 +12,7 @@ schema_jobs = StructType([
     Schema to table departments.csv file.
 """
 schema_departments = StructType([
-    StructField("id", IntegerType(), True),
+    StructField("id", IntegerType(), False),
     StructField("department", StringType(), True)
 ])
 
@@ -20,7 +20,7 @@ schema_departments = StructType([
     Schema to table hired_employees.csv file.
 """
 schema_hired_employees = StructType([
-    StructField("id", IntegerType(), True),
+    StructField("id", IntegerType(), False),
     StructField("name", StringType(), True),
     StructField("datetime", StringType(), True),
     StructField("department_id", IntegerType(), True),
