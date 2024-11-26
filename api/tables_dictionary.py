@@ -17,9 +17,9 @@ schema_departments = StructType([
 ])
 
 """
-    Schema to table hired_employess.csv file.
+    Schema to table hired_employees.csv file.
 """
-schema_hired_employess = StructType([
+schema_hired_employees = StructType([
     StructField("id", IntegerType(), True),
     StructField("name", StringType(), True),
     StructField("datetime", StringType(), True),
@@ -33,5 +33,5 @@ schema_hired_employess = StructType([
 schemas = {
     "jobs": schema_jobs,
     "departments": schema_departments,
-    "hired_employess": schema_hired_employess
+    "hired_employees": schema_hired_employees
 }
