@@ -49,3 +49,10 @@ async def root(request: Request):
         return {"Table_load": table}
     except Exception as e:
         return {"Table_error": str(e)}
+
+@etl_s3_psql.get('/t')
+async def root():
+    """
+    To test the correct connection to the API Router.
+    """
+    return {"Globant": "DE Challenge router"}
