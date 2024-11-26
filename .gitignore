@@ -6,9 +6,12 @@ __pycache__/
 env/
 
 # Logs
-.log
+*.log
 log/
 etc/
 
 # Test
-Dockerfile.old
+*.old
+
+# SSH Key
+*.pem
