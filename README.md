@@ -1,7 +1,7 @@
-# GLOB-DE-Challenge
+# FastAPI Pipeline
 
 ## Introduction
-The process of resolve the challenge, were guided by the simple next cloud architecture:
+The process of resolve the pipeline, were guided by the simple next cloud architecture:
 
 ![architecture](https://i.imgur.com/bhl84Ak.png)
 

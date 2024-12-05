@@ -10,4 +10,4 @@ async def root():
     """
     To test the correct connection to the API.
     """
-    return {"Globant": "DE Challenge"}
+    return {"OK": "API Working"}
